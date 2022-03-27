@@ -21,6 +21,7 @@
 		<fixture-factory.version>3.1.0</fixture-factory.version>
 		<hamcrest.version>2.2</hamcrest.version>
 		<easy-random-core.version>5.0.0</easy-random-core.version>
+		<logback-classic.version>1.2.11</logback-classic.version>
 	</properties>
 
 	<dependencies>
@@ -38,6 +39,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback-classic.version}</version>
 		</dependency>
 
 		<dependency>
