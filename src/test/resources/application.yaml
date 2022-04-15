@@ -1,2 +1,9 @@
+broker:
+  hotels:
+    endpoint: https://cvcbackendhotel.herokuapp.com/hotels/avail/
+  hotel:
+    details:
+      endpoint: https://cvcbackendhotel.herokuapp.com/hotels/
+
 booking:
   fee: 0.70
