@@ -15,7 +15,7 @@
 
 ### Instructions
 - Clone the project
-- Run the project: $ mvn spring-boot:run
+- Run the project: `$ mvn spring-boot:run`
 
 ### About the application
 It's a RESTFull API for booking and searching a hotel.
