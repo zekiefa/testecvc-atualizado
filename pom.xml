@@ -22,6 +22,7 @@
 		<hamcrest.version>2.2</hamcrest.version>
 		<easy-random-core.version>5.0.0</easy-random-core.version>
 		<logback-classic.version>1.2.11</logback-classic.version>
+		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -127,6 +128,51 @@
 						</dependency>
 					</annotationProcessorPaths>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report-it</id>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>test</phase>
+						<configuration>
+							<rules>
+								<rule>
+									<element>PACKAGE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.8</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+							<excludes>
+								<exclude>br/com/cvc/evaluation/domain/*</exclude>
+								<exclude>br/com/cvc/evaluation/broker/dto/*</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
