@@ -5,14 +5,11 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import br.com.cvc.evaluation.broker.dto.BrokerHotel;
-import br.com.cvc.evaluation.domain.Hotel;
 import br.com.cvc.evaluation.fixtures.BrokerHotelFixture;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
