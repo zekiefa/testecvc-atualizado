@@ -1,9 +1,5 @@
 broker:
-  hotels:
-    endpoint: https://cvcbackendhotel.herokuapp.com/hotels/avail/
-  hotel:
-    details:
-      endpoint: https://cvcbackendhotel.herokuapp.com/hotels/
+    url: http://localhost:3000
 
 booking:
   fee: 0.70

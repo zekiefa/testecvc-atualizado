@@ -5,23 +5,22 @@ import java.util.Objects;
 import java.util.Optional;
 
 import br.com.cvc.evaluation.broker.dto.BrokerHotel;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@Service
+@Component
 public class BrokerService {
-	@Value("${broker.hotels.endpoint}")
-	private String hotelsEndpoint;
+	private final WebClient webClient;
 
-	@Value("${broker.hotel.details.endpoint}")
-	private String hotelDetailsEndpoint;
+	public BrokerService(final WebClient webClient) {
+		this.webClient = webClient;
+	}
 
 	public List<BrokerHotel> findHotelsByCity(final Integer codeCity) {
-		final ResponseEntity<List<BrokerHotel>> response = WebClient.create()
+		final ResponseEntity<List<BrokerHotel>> response = this.webClient
 						.get()
-						.uri(this.hotelsEndpoint.concat(codeCity.toString()))
+						.uri(String.format("/hotels/avail/%d", codeCity))
 						.retrieve()
 						.toEntityList(BrokerHotel.class)
 						.block();
@@ -31,9 +30,9 @@ public class BrokerService {
 	}
 
 	public Optional<BrokerHotel> getHotelDetails(final Integer codeHotel) {
-		final ResponseEntity<List<BrokerHotel>> response = WebClient.create()
+		final ResponseEntity<List<BrokerHotel>> response = this.webClient
 						.get()
-						.uri(this.hotelDetailsEndpoint.concat(codeHotel.toString()))
+						.uri(String.format("/hotels/%d", codeHotel))
 						.retrieve()
 						.toEntityList(BrokerHotel.class)
 						.block();
@@ -45,5 +44,4 @@ public class BrokerService {
 
 		return Optional.empty();
 	}
-
 }
