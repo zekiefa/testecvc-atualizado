@@ -12,6 +12,7 @@
 - [Fixture Factory](https://github.com/six2six/fixture-factory) for generate fake objects
 - [Hamcrest](http://hamcrest.org/JavaHamcrest) for alternative asserts
 - [EasyRandom](https://github.com/j-easy/easy-random) for generate randomic objects
+- [Wiremock](https://wiremock.org/docs/) for asserts with endpoints and http clients
 
 ### Instructions
 - Clone the project
