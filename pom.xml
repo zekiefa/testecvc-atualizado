@@ -20,7 +20,7 @@
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<fixture-factory.version>3.1.0</fixture-factory.version>
 		<hamcrest.version>2.2</hamcrest.version>
-		<wiremock.version>2.32.0</wiremock.version>
+		<wiremock.version>2.33.0</wiremock.version>
 		<easy-random-core.version>5.0.0</easy-random-core.version>
 		<logback-classic.version>1.2.11</logback-classic.version>
 		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
@@ -114,7 +114,11 @@
 			<version>${javax.json-api.version}</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -191,6 +195,7 @@
 							<excludes>
 								<exclude>br/com/cvc/evaluation/domain/*</exclude>
 								<exclude>br/com/cvc/evaluation/broker/dto/*</exclude>
+								<exclude>br/com/cvc/evaluation/*</exclude>
 							</excludes>
 						</configuration>
 					</execution>

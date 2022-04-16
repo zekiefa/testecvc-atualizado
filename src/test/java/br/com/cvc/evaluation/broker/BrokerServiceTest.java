@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.emptyCollectionOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import br.com.cvc.evaluation.EvaluationApplication;
@@ -16,9 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @SpringBootTest
-@ContextConfiguration(classes = EvaluationApplication.class)
 @Import({WireMockConfig.class, WebClientConfig.class})
 class BrokerServiceTest {
     @Autowired
@@ -38,6 +39,14 @@ class BrokerServiceTest {
         );
     }
 
+    void testFindNoHotelsByCity() {
+        final var cityCode = 56;
+
+        final var hotelsByCity = this.brokerService.findHotelsByCity(cityCode);
+
+        assertThat(hotelsByCity, emptyCollectionOf(BrokerHotel.class));
+    }
+
     @Test
     void testGetHotelDetails() {
         final var hotelCode = 1;
@@ -48,5 +57,13 @@ class BrokerServiceTest {
                         () -> assertTrue(hotelDetails.isPresent()),
                         () -> assertThat(hotelDetails.get().getId(), is(hotelCode))
         );
+    }
+
+    @Test
+    void testGetNoHotelDetails() {
+        final var hotelCode = 99;
+
+        assertThrowsExactly(WebClientResponseException.NotFound.class,
+                        () -> this.brokerService.getHotelDetails(hotelCode));
     }
 }

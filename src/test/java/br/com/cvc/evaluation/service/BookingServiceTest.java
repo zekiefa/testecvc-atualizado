@@ -59,7 +59,7 @@ class BookingServiceTest {
     @Test
     void testGetHotelDetails() {
         // Arranges
-        final BrokerHotel brokerHotel = Fixture.from(BrokerHotel.class).gimme(BrokerHotelFixture.VALIDO);
+        final BrokerHotel brokerHotel = Fixture.from(BrokerHotel.class).gimme(BrokerHotelFixture.VALID);
         final var fee = BigDecimal.ONE;
         when(brokerService.getHotelDetails(anyInt())).thenReturn(Optional.of(brokerHotel));
         when(feeService.calculateFee(any(), anyLong())).thenReturn(fee);
@@ -81,7 +81,7 @@ class BookingServiceTest {
     @Test
     void testFindHotels() {
         // Arranges
-        final List<BrokerHotel> brokerHotels = Fixture.from(BrokerHotel.class).gimme(2, BrokerHotelFixture.VALIDO);
+        final List<BrokerHotel> brokerHotels = Fixture.from(BrokerHotel.class).gimme(2, BrokerHotelFixture.VALID);
         final var fee = BigDecimal.ONE;
         when(brokerService.findHotelsByCity(anyInt())).thenReturn(brokerHotels);
         when(feeService.calculateFee(any(), anyLong())).thenReturn(fee);

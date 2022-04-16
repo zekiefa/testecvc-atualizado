@@ -5,9 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
-import java.util.ArrayList;
-import java.util.regex.Pattern;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import br.com.cvc.evaluation.broker.dto.BrokerHotel;
 import br.com.cvc.evaluation.fixtures.BrokerHotelFixture;
@@ -27,7 +25,7 @@ class HotelMapperTest {
 
     @Test
     void testToDomain() {
-        final BrokerHotel brokerHotel = Fixture.from(BrokerHotel.class).gimme(BrokerHotelFixture.VALIDO);
+        final BrokerHotel brokerHotel = Fixture.from(BrokerHotel.class).gimme(BrokerHotelFixture.VALID);
 
         final var hotel = this.mapper.toDomain(brokerHotel);
 
@@ -35,6 +33,34 @@ class HotelMapperTest {
                         () -> assertThat(hotel.getId(), is(brokerHotel.getId())),
                         () -> assertThat(hotel.getCityName(), is(brokerHotel.getCityName())),
                         () -> assertFalse(hotel.getRooms().isEmpty())
+        );
+    }
+
+    @Test
+    void testToDomainWithoutRoom() {
+        final BrokerHotel brokerHotel = Fixture.from(BrokerHotel.class)
+                        .gimme(BrokerHotelFixture.VALID_WITHOUT_ROOM);
+
+        final var hotel = this.mapper.toDomain(brokerHotel);
+
+        assertAll("domain",
+                        () -> assertThat(hotel.getId(), is(brokerHotel.getId())),
+                        () -> assertThat(hotel.getCityName(), is(brokerHotel.getCityName())),
+                        () -> assertNull(hotel.getRooms())
+        );
+    }
+
+    @Test
+    void testToDomainWithEmptyRoomList() {
+        final BrokerHotel brokerHotel = Fixture.from(BrokerHotel.class)
+                        .gimme(BrokerHotelFixture.VALID_WITH_EMPTY_ROOM_LIST);
+
+        final var hotel = this.mapper.toDomain(brokerHotel);
+
+        assertAll("domain",
+                        () -> assertThat(hotel.getId(), is(brokerHotel.getId())),
+                        () -> assertThat(hotel.getCityName(), is(brokerHotel.getCityName())),
+                        () -> assertTrue(hotel.getRooms().isEmpty())
         );
     }
 
