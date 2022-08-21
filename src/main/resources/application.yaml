@@ -1,2 +1,6 @@
 booking:
   fee: 0.70
+
+user:
+  login: usuario
+  passwd: senha

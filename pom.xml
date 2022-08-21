@@ -16,15 +16,16 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<lombok.version>1.18.22</lombok.version>
-		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+		<lombok.version>1.18.24</lombok.version>
+		<org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
 		<fixture-factory.version>3.1.0</fixture-factory.version>
 		<hamcrest.version>2.2</hamcrest.version>
-		<wiremock.version>2.33.0</wiremock.version>
+		<wiremock.version>2.33.2</wiremock.version>
 		<easy-random-core.version>5.0.0</easy-random-core.version>
 		<logback-classic.version>1.2.11</logback-classic.version>
 		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
 		<javax.json-api.version>1.1.4</javax.json-api.version>
+		<jjwt.version>0.9.1</jjwt.version>
 	</properties>
 
 	<dependencies>
@@ -42,6 +43,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jjwt.version}</version>
 		</dependency>
 
 		<dependency>
