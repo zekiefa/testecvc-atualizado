@@ -14,10 +14,10 @@ import java.io.InputStream;
 import java.io.StringReader;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@TestConfiguration
 public class WireMockConfig {
     private static final String HOTELS_JSON_FILE = "/hotels.json";
     private static final String BASE_PATH = "/hotels";

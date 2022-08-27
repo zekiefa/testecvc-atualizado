@@ -5,7 +5,6 @@ import static io.restassured.RestAssured.given;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import br.com.cvc.evaluation.config.SpringSecurityTestConfig;
 import br.com.cvc.evaluation.config.WebClientConfig;
 import br.com.cvc.evaluation.config.WireMockConfig;
 import br.com.cvc.evaluation.domain.Hotel;
@@ -15,13 +14,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import({WireMockConfig.class, WebClientConfig.class, SpringSecurityTestConfig.class})
-@WithMockUser(username = "usuario", authorities = { "admin", "user" })
+@SpringBootTest(
+                webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+                classes = {WireMockConfig.class, WebClientConfig.class})
+@WithMockUser(username = "usuario", authorities = {"admin", "user"})
 public class BookingEndpointTest {
     private static final String DATE_FORMAT = "yyyy-MM-dd";
 
