@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import br.com.cvc.evaluation.broker.dto.BrokerHotel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,8 +14,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class BrokerService {
 	private final WebClient webClient;
 
-	public BrokerService(final WebClient webClient) {
-		this.webClient = webClient;
+	@Autowired
+	public BrokerService(final WebClient brokerServiceClient) {
+		this.webClient = brokerServiceClient;
 	}
 
 	public List<BrokerHotel> findHotelsByCity(final Integer codeCity) {

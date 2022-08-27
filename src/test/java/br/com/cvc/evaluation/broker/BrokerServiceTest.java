@@ -8,20 +8,20 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import br.com.cvc.evaluation.EvaluationApplication;
 import br.com.cvc.evaluation.broker.dto.BrokerHotel;
+import br.com.cvc.evaluation.config.SpringSecurityTestConfig;
 import br.com.cvc.evaluation.config.WebClientConfig;
 import br.com.cvc.evaluation.config.WireMockConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @SpringBootTest
-@Import({WireMockConfig.class, WebClientConfig.class})
+@Import({WireMockConfig.class, WebClientConfig.class, SpringSecurityTestConfig.class})
 class BrokerServiceTest {
+
     @Autowired
     private BrokerService brokerService;
 

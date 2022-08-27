@@ -10,12 +10,14 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class TokenService {
     private final String expiration;
     private final String secret;
@@ -74,6 +76,7 @@ public class TokenService {
 
 
     private String createToken(final Map<String, Object> claims, final String subject) {
+        log.info("Creating token...");
         final var now = Instant.ofEpochMilli(System.currentTimeMillis());
         final var expirationTime = Date.from(now.plusMillis(Long.parseLong(this.expiration)));
 
@@ -92,6 +95,7 @@ public class TokenService {
      * @return return true if the @{@link UserDetails} is equal to token user
      */
     public Boolean validateToken(final String token, final UserDetails userDetails) {
+        log.info("Validating token...");
         final var username = extractUsername(token);
 
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
@@ -105,8 +109,10 @@ public class TokenService {
     public boolean isTokenValid(final String token) {
         try {
             Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
+            log.info("Token validated");
             return true;
         } catch (JwtException | IllegalArgumentException e) {
+            log.warn("Token invalid: {}", e.getMessage());
             return false;
         }
    }

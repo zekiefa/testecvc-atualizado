@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import br.com.cvc.evaluation.EvaluationApplication;
+import br.com.cvc.evaluation.config.SpringSecurityTestConfig;
 import br.com.cvc.evaluation.config.WebClientConfig;
 import br.com.cvc.evaluation.config.WireMockConfig;
 import br.com.cvc.evaluation.domain.Hotel;
@@ -21,7 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = EvaluationApplication.class)
-@Import({WireMockConfig.class, WebClientConfig.class})
+@Import({WireMockConfig.class, WebClientConfig.class, SpringSecurityTestConfig.class})
 public class HotelEndpointTest {
     @LocalServerPort
     private int port;
