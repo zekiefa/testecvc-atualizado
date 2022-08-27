@@ -1,5 +1,6 @@
 package br.com.cvc.evaluation.service;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,17 +12,22 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TokenService {
-    @Value("${jwt.expiration}")
-    private String expiration;
+    private final String expiration;
+    private final String secret;
+    private final String issuer;
 
-    @Value("${jwt.secret}")
-    private String secret;
+    public TokenService(@Value("${jwt.expiration}") final String expiration,
+                    @Value("${jwt.secret}") final String secret,
+                    @Value("${spring.application.name}") final String issuer) {
+        this.expiration = expiration;
+        this.secret = secret;
+        this.issuer = issuer;
+    }
 
     /**
      * Extracting username from the token
@@ -32,23 +38,11 @@ public class TokenService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    /**
-     * Extracting the expiry of the token
-     * @param token authentication
-     * @return the expiration time
-     */
-    public Date extractExpiration(final String token) {
+    private Date extractExpiration(final String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    /**
-     * Extracting the claim based on the condition
-     * @param token authentication
-     * @param claimsResolver for claims
-     * @return the claim resolver
-     * @param <T> the generic class
-     */
-    public <T> T extractClaim(final String token, final Function<Claims, T> claimsResolver) {
+    private <T> T extractClaim(final String token, final Function<Claims, T> claimsResolver) {
         final var claims = extractAllClaims(token);
 
         return claimsResolver.apply(claims);
@@ -62,12 +56,7 @@ public class TokenService {
         return extractExpiration(token).before(new Date());
     }
 
-    /**
-     * Generating token
-     * @param username of the authentication
-     * @return the new token
-     */
-    public String generateToken(final String username) {
+    private String generateToken(final String username) {
         final var claims = new HashMap<String, Object>();
         return createToken(claims, username);
     }
@@ -78,18 +67,20 @@ public class TokenService {
      * @return the new token
      */
     public String generateToken(final Authentication authentication) {
-        final var user = (User) authentication.getPrincipal();
+        final var user = (UserDetails) authentication.getPrincipal();
 
         return this.generateToken(user.getUsername());
     }
 
 
     private String createToken(final Map<String, Object> claims, final String subject) {
-        final var now = new Date();
-        final var expirationTime = new Date(now.getTime() + Long.parseLong(this.expiration));
+        final var now = Instant.ofEpochMilli(System.currentTimeMillis());
+        final var expirationTime = Date.from(now.plusMillis(Long.parseLong(this.expiration)));
 
         return Jwts.builder().setClaims(claims)
-                        .setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+                        .setSubject(subject)
+                        .setIssuer(this.issuer)
+                        .setIssuedAt(Date.from(now))
                         .setExpiration(expirationTime)
                         .signWith(SignatureAlgorithm.HS256, this.secret).compact();
     }
@@ -108,7 +99,7 @@ public class TokenService {
 
     /**
      * Validate the token
-     * @param token to be validate
+     * @param token to be validated
      * @return true if token is valid
      */
     public boolean isTokenValid(final String token) {

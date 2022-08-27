@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    @Value("${user.login}")
-    private String login;
-    @Value("${user.passwd}")
-    private String passwd;
+    private final String login;
+    private final String passwd;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    public UserService(@Value("${user.login}") final String login,
+                    @Value("${user.passwd}") final String passwd) {
+        this.login = login;
+        this.passwd = passwd;
+    }
 
     public Optional<User> findByLogin(final String login) {
         // o ideal é ter um banco de dados para consultar o usuário
