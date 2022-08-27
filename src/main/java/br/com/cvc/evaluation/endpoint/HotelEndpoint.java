@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/hotels")
 public class HotelEndpoint {
-
 	@Autowired
 	private BookingService bookingService;
 

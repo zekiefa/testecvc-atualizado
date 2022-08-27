@@ -9,7 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import br.com.cvc.evaluation.config.WebClientConfig;
 import br.com.cvc.evaluation.config.WireMockConfig;
 import br.com.cvc.evaluation.domain.Hotel;
+import br.com.cvc.evaluation.fixtures.TokenBuilder;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,18 +32,38 @@ public class HotelEndpointTest {
 
     @Test
     void testFind() {
+        // Arranges
+        final var tokenBuilder = new TokenBuilder();
         final var idHotel = 1;
 
+        // Act
         final var response = given()
+                        .headers("Authorization", "Bearer " + tokenBuilder.createJWT("usuario", 60000L))
+                        .contentType(ContentType.JSON)
+                        .accept(ContentType.JSON)
+                        .log().all()
                         .when().get(String.format("/hotels/%d", idHotel))
                         .then()
                         .statusCode(HttpStatus.OK.value())
                         .extract()
                         .as(Hotel.class);
 
+        // Asserts
         assertAll("success",
                         () -> assertNotNull(response),
                         () -> assertThat(response.getId(), is(idHotel))
         );
+    }
+
+    @Test
+    void testFindWithoutToken() {
+        // Act
+        final var response = given()
+                        .contentType(ContentType.JSON)
+                        .accept(ContentType.JSON)
+                        .log().all()
+                        .when().get("/hotels/1")
+                        .then()
+                        .statusCode(HttpStatus.FORBIDDEN.value());
     }
 }

@@ -9,19 +9,17 @@ import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import br.com.cvc.evaluation.broker.dto.BrokerHotel;
-import br.com.cvc.evaluation.config.SpringSecurityTestConfig;
 import br.com.cvc.evaluation.config.WebClientConfig;
 import br.com.cvc.evaluation.config.WireMockConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-@SpringBootTest
-@Import({WireMockConfig.class, WebClientConfig.class, SpringSecurityTestConfig.class})
+@SpringBootTest(classes = {WireMockConfig.class, WebClientConfig.class})
+@WithMockUser
 class BrokerServiceTest {
-
     @Autowired
     private BrokerService brokerService;
 

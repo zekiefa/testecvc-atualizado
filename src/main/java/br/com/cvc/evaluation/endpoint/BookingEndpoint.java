@@ -16,7 +16,6 @@ import br.com.cvc.evaluation.service.BookingService;
 @RestController
 @RequestMapping("/booking")
 public class BookingEndpoint {
-
 	@Autowired
 	private BookingService bookingService;
 
