@@ -17,8 +17,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {WireMockConfig.class,
-                                                                                       WebClientConfig.class}) public class BookingEndpointTest {
+@SpringBootTest(
+                webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+                classes = {WireMockConfig.class, WebClientConfig.class})
+public class BookingEndpointTest {
     private static final String DATE_FORMAT = "yyyy-MM-dd";
 
     @LocalServerPort private int port;

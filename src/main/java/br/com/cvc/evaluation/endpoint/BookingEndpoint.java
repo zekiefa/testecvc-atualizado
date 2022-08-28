@@ -5,9 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cvc.evaluation.domain.Hotel;
@@ -22,6 +24,7 @@ public class BookingEndpoint {
 	private static final String DATE_FORMAT = "yyyy-MM-dd";
 
 	@GetMapping("/{cityCode}/{checkin}/{checkout}/{adults}/{children}")
+	@ResponseStatus(HttpStatus.OK)
 	public List<Hotel> find(@PathVariable("cityCode") final Integer cityCode,
 			@PathVariable("checkin") final String checkin, @PathVariable("checkout") final String checkout,
 			@PathVariable("adults") final Integer adults, @PathVariable("children") final Integer children) {
