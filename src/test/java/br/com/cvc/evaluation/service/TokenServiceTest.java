@@ -22,7 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @ExtendWith(MockitoExtension.class)
 class TokenServiceTest {
     private static final Long TTL_MILLIS = 86400000L;
-    private static final String SECRET_KEY = "A+X;fTJP&Pd,TD9dwVq(hsHX,ya^<wsD_UK7L+@=S;{'CydP]{v@}G'b>et;yz$*\\yL5S8EJN:%P:X%H9>#nYLrX}@\\s?CQcpspH,2emzBc!Q[V'AYa~uzF8WR~AUrMzxp/V$9([S9X#zj/CH('#]B_Hc+%fGhe27YB;^j4\\Xk=Ju\"Ap~_&<L;=!Z;!,2UP;!hF3P]j85#*`&T]/kB/W^6$v~u6qpejL>kY^f)sy4:qTq_Ec!-z!@aAp~sLKGU>$";
+    private static final String SECRET_KEY = "gxpDDSFYh2988jGRPvugceuysCNLdiubH0Fsu2YDBR0=";
     private static final String APPLICATION_NAME = "testecvc";
     @Mock
     private Authentication authentication;
