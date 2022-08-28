@@ -22,17 +22,31 @@
 ### About the application
 It's a RESTFull API for booking and searching a hotel with JWT authentication.
 
-### Access the application
-http://localhost:8080/booking/9626/2019-09-24/2019-09-30/1/0, where:
-- 9626: city code
-- 2019-09-24: checkin
-- 2019-09-30: checkout
-- 1: adults
-- 0: child
+### JWT Authentication
+```shell
+curl --request POST \
+--url http://localhost:8080/auth \
+--header 'Content-Type: application/json' \
+--data '{
+"user": "usuario",
+"passwd": "senha"
+}'
+```
 
-http://localhost:8080/hotel/6, where:
-- 6: hotel ID
+### Access the application with the token
+````shell
+curl --request GET \
+  --url http://localhost:8080/booking/55/2022-08-27/2022-08-27/2/1 \
+  --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c3VhcmlvIiwiaXNzIjoidGVzdGVjdmMiLCJpYXQiOjE2NjE2NTM4MzMsImV4cCI6MTY2MTc0MDIzM30.daC15QAqKtpJRhSz-Y63Ul_bHOVZHCpJeZbZnx7JMjI'
+````
+
+````shell
+curl --request GET \
+  --url http://localhost:8080/hotel/6 \
+  --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c3VhcmlvIiwiaXNzIjoidGVzdGVjdmMiLCJpYXQiOjE2NjE2NTM4MzMsImV4cCI6MTY2MTc0MDIzM30.daC15QAqKtpJRhSz-Y63Ul_bHOVZHCpJeZbZnx7JMjI'
+````
 
 ### References
 - [Baeldung](https://www.baeldung.com)
+- [FreeCodeCamp](https://www.freecodecamp.org/portuguese/news/como-configurar-a-autenticacao-e-a-autorizacao-no-jwt-para-o-spring-boot-em-java/)
 
