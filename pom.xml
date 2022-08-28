@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.cvc.evaluation</groupId>
-	<artifactId>uppgraded-evaluation</artifactId>
+	<artifactId>upgraded-evaluation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>testecvc-atualizado</name>
-	<description>Backend Developer Evaluation</description>
+	<description>Backend Java Developer Evaluation</description>
 
 	<properties>
 		<java.version>11</java.version>
