@@ -227,9 +227,10 @@
 								</rule>
 							</rules>
 							<excludes>
-								<exclude>br/com/cvc/evaluation/domain/*</exclude>
-								<exclude>br/com/cvc/evaluation/broker/dto/*</exclude>
-								<exclude>br/com/cvc/evaluation/*</exclude>
+								<exclude>**/domain/*</exclude>
+								<exclude>**/broker/dto/*</exclude>
+								<exclude>**/config/*</exclude>
+								<exclude>br/com/cvc/evaluation/EvaluationApplication.class</exclude>
 							</excludes>
 						</configuration>
 					</execution>
