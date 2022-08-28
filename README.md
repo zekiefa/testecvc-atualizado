@@ -7,6 +7,7 @@
 - [Mapstruct](https://mapstruct.org) for conversions between domains
 - [WebClient](https://www.baeldung.com/spring-5-webclient): a reactive client HTTP
 - [SL4J](https://www.slf4j.org/manual.html) for logging
+- [io.jsonwebtoken](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api) for JWT authentication
 - [JUnit 5](https://junit.org/junit5/docs/current/user-guide) for unit tests
 - [Mockito](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html)
 - [Fixture Factory](https://github.com/six2six/fixture-factory) for generate fake objects
@@ -19,7 +20,7 @@
 - Run the project: `$ mvn spring-boot:run`
 
 ### About the application
-It's a RESTFull API for booking and searching a hotel.
+It's a RESTFull API for booking and searching a hotel with JWT authentication.
 
 ### Access the application
 http://localhost:8080/booking/9626/2019-09-24/2019-09-30/1/0, where:
