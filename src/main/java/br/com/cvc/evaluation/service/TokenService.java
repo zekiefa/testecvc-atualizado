@@ -1,5 +1,8 @@
 package br.com.cvc.evaluation.service;
 
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
+import java.security.Key;
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,6 +10,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -33,6 +37,7 @@ public class TokenService {
 
     /**
      * Extracting username from the token
+     *
      * @param token of authentication
      * @return the username
      */
@@ -51,20 +56,27 @@ public class TokenService {
     }
 
     private Claims extractAllClaims(final String token) {
-        return Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
+        return this.parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(final String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    private String generateToken(final String username) {
+    /**
+     * Generate token by username
+     *
+     * @param username to login
+     * @return a token
+     */
+    public String generateToken(final String username) {
         final var claims = new HashMap<String, Object>();
         return createToken(claims, username);
     }
 
     /**
      * Generating token
+     *
      * @param authentication for generate token
      * @return the new token
      */
@@ -73,7 +85,6 @@ public class TokenService {
 
         return this.generateToken(user.getUsername());
     }
-
 
     private String createToken(final Map<String, Object> claims, final String subject) {
         log.info("Creating token...");
@@ -85,12 +96,14 @@ public class TokenService {
                         .setIssuer(this.issuer)
                         .setIssuedAt(Date.from(now))
                         .setExpiration(expirationTime)
-                        .signWith(SignatureAlgorithm.HS256, this.secret).compact();
+                        .signWith(this.key())
+                        .compact();
     }
 
     /**
      * Validating the token
-     * @param token of the authentication
+     *
+     * @param token       of the authentication
      * @param userDetails - details of the user
      * @return return true if the @{@link UserDetails} is equal to token user
      */
@@ -103,19 +116,32 @@ public class TokenService {
 
     /**
      * Validate the token
+     *
      * @param token to be validated
      * @return true if token is valid
      */
     public boolean isTokenValid(final String token) {
         try {
-            Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
+            this.parseClaimsJws(token);
             log.info("Token validated");
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             log.warn("Token invalid: {}", e.getMessage());
             return false;
         }
-   }
+    }
 
+    private Jws<Claims> parseClaimsJws(final String token) {
+        return Jwts.parserBuilder()
+                        .setSigningKey(this.key())
+                        .build()
+                        .parseClaimsJws(token);
+    }
+
+    private Key key() {
+        final var apiKeySecretBytes = DatatypeConverter.parseBase64Binary(this.secret);
+
+        return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
+    }
 
 }
