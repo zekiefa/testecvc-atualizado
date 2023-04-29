@@ -42,7 +42,7 @@ public class HotelEndpointTest {
                         .contentType(ContentType.JSON)
                         .accept(ContentType.JSON)
                         .log().all()
-                        .when().get(String.format("/hotels/%d", idHotel))
+                        .when().get(String.format("/api/v1/hotels/%d", idHotel))
                         .then()
                         .statusCode(HttpStatus.OK.value())
                         .extract()
@@ -62,7 +62,7 @@ public class HotelEndpointTest {
                         .contentType(ContentType.JSON)
                         .accept(ContentType.JSON)
                         .log().all()
-                        .when().get("/hotels/1")
+                        .when().get("/api/v1/hotels/1")
                         .then()
                         .statusCode(HttpStatus.FORBIDDEN.value());
     }
